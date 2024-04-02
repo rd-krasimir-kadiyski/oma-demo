@@ -4,24 +4,24 @@
     <ng-container *ngFor="let colName of dynamicColumns; index as i;" [matColumnDef]="colName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{displayColumnNames[i]}} </th>
       <td mat-cell *matCellDef="let element">
-        <div *ngIf="element.editing && colName === 'writer'"  class="writer-column">
-          <mat-select [(value)]="element[colName]" multiple>
-            <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
-          </mat-select>
-        </div>
-        <div *ngIf="isTypeOf(element[colName],'boolean')">
-          <mat-checkbox [checked]="element.active" [disabled]="!element.editing"></mat-checkbox>
-        </div>
-        <div *ngIf="element.editing && element === 'last_update'">
-          <input type="datetime-local" [(ngModel)]="element[colName]">
-        </div>
-        <div *ngIf="element.editing && colName === 'minutes'">
-          <input type="number" [(ngModel)]="element[colName]" (ngModelChange)="validateMinutes(element)">
-        </div>
-        <div *ngIf="element.editing && colName !== 'writer' && colName !== 'active' && colName !== 'last_update' && colName !== 'minutes'">
+        <div *ngIf="element.editing && isTypeOf(element[colName],  'string')">
           <input [(ngModel)]="element[colName]">
         </div>
-        <div *ngIf="!element.editing && !isTypeOf(element[colName],'boolean')">
+        <div *ngIf="element.editing && isTypeOf(element[colName],  'number')">
+          <input type="number" [(ngModel)]="element[colName]">
+        </div>
+        <div *ngIf="element.editing && isTypeOf(element[colName],  'boolean')">
+          <mat-checkbox [checked]="element[colName]"></mat-checkbox>
+        </div>
+        <div *ngIf="element.editing && isTypeOf(element[colName],  'object')">
+          <input type="datetime-local" [(ngModel)]="element[colName]">
+        </div>
+        <div *ngIf="element.editing && isTypeOf(element[colName],  'object')">
+          <mat-select [(value)]="element[colName]">
+            <mat-option *ngFor="let option of element[colName]" [value]="option">{{option}}</mat-option>
+          </mat-select>
+        </div>
+        <div *ngIf="!element.editing">
           <div>{{element[colName]}}</div>
         </div>
       </td>
