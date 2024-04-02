@@ -24,10 +24,4 @@ export class ArticleService {
    getDisplayColumnNames1() {
       return ['Id', 'Title', 'Category', 'Writer', 'Active', 'Last Update', 'Minutes'];
    }
-   getDynamicColumns2() {
-      return ['id', 'title'];
-   }
-   getDisplayColumnNames2() {
-      return ['Id', 'Title'];
-   }
 }

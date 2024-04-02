@@ -52,4 +52,9 @@ export class DynamicTableComponent implements AfterViewInit {
       this.dataSource.paginator = this.paginator;
     });
   }
+
+  isTypeOf(value: any, type: string): boolean {
+    console.log(typeof value + ' ' + type);
+    return typeof value === type;
+  }
 }

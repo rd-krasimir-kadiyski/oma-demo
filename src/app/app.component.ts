@@ -9,20 +9,13 @@ import { Article } from './article';
    <h3>Table 1</h3>
 
     <dynamic-table
-     [dynamicColumns]="dynamicColumns1" 
+     [dynamicColumns]="dynamicColumns1"
      [displayColumnNames]="displayColNames1"
      [dataToDisplay]="articleData$">
     </dynamic-table>
 
-    <h3>Table 2</h3>
 
-    <dynamic-table
-     [dynamicColumns]="dynamicColumns2" 
-     [displayColumnNames]="displayColNames2"
-     [dataToDisplay]="articleData$">
-    </dynamic-table>    
-    
-  ` 
+  `
 })
 export class AppComponent implements OnInit {
   dynamicColumns1!: string[];
@@ -41,7 +34,5 @@ export class AppComponent implements OnInit {
      this.dynamicColumns1 = this.articleService.getDynamicColumns1();
      this.displayColNames1 = this.articleService.getDisplayColumnNames1();
 
-     this.dynamicColumns2 = this.articleService.getDynamicColumns2();
-     this.displayColNames2 = this.articleService.getDisplayColumnNames2();    
   }
 }

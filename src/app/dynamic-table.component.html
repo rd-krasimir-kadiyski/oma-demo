@@ -9,7 +9,7 @@
             <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
           </mat-select>
         </div>
-        <div *ngIf="colName === 'active'">
+        <div *ngIf="isTypeOf(element[colName],'boolean')">
           <mat-checkbox [checked]="element.active" [disabled]="!element.editing"></mat-checkbox>
         </div>
         <div *ngIf="element.editing && element === 'last_update'">
@@ -21,8 +21,8 @@
         <div *ngIf="element.editing && colName !== 'writer' && colName !== 'active' && colName !== 'last_update' && colName !== 'minutes'">
           <input [(ngModel)]="element[colName]">
         </div>
-        <div *ngIf="!element.editing">
-          {{element[colName]}}
+        <div *ngIf="!element.editing && !isTypeOf(element[colName],'boolean')">
+          <div>{{element[colName]}}</div>
         </div>
       </td>
     </ng-container>
