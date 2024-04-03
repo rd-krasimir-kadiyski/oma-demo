@@ -21,11 +21,18 @@ export class DynamicTableComponent implements AfterViewInit {
   addingNewRecord = false;
   dataSource = new MatTableDataSource();
   validationStatus: { [key: string]: boolean } = {};
+  editingRow: any = null;
   isAnyInputInvalid(): boolean {
     return Object.values(this.validationStatus).some(status => status);
   }
   editRow(row: any) {
+    if (this.editingRow && this.editingRow !== row) {
+      return;
+    }
+
     row.editing = !row.editing;
+    this.editingRow = row.editing ? row : null;
+
     if (!row.editing) {
       this.addingNewRecord = false;
     }
