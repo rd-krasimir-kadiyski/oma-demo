@@ -28,6 +28,6 @@ export class ArticleService {
     return ['Id', 'Title', 'Category', 'Writer', 'Active', 'Last Update', 'Minutes'];
   }
   getColumnValidations() {
-    return [{name: 'id', validator: {min: 1, max: 20} as NumberValidator}, {name: 'minutes', validator: {min: 1, max: 20} as NumberValidator}];
+    return [{name: 'id', validator: {min: 1, max: 20} as NumberValidator}, {name: 'minutes', validator: {min: 1, max: 10} as NumberValidator}];
   }
 }

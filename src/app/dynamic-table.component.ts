@@ -18,16 +18,21 @@ export class DynamicTableComponent implements AfterViewInit {
   @Input('displayColumnNames') displayColumnNames!: string[];
   @Input('dataToDisplay') dataToDisplay$!: Observable<any>;
   @Input('columnValidations') columnValidations!: any[];
-
+  addingNewRecord = false;
   dataSource = new MatTableDataSource();
-  options = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
   validationStatus: { [key: string]: boolean } = {};
-
+  isAnyInputInvalid(): boolean {
+    return Object.values(this.validationStatus).some(status => status);
+  }
   editRow(row: any) {
     row.editing = !row.editing;
+    if (!row.editing) {
+      this.addingNewRecord = false;
+    }
   }
 
   addNewRecord() {
+    this.addingNewRecord = true;
 
     let newRecord: Article = {
       id: 1,
@@ -68,6 +73,9 @@ export class DynamicTableComponent implements AfterViewInit {
   }
 
   isTypeOf(value: any, type: string, instance?: string): boolean {
+    if (value === null || value === undefined) {
+      return type === 'number';
+    }
     switch (instance) {
       case 'date': {
         return value instanceof Date;
