@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Article } from './article';
+import {NumberValidator} from "./number-validator";
 
 const All_ARTICLES: Article[] = [
   { id: 1, title: 'Angular Tutorial', category: 'Angular', writer: 'Mohit', active: false, last_update: new Date(), minutes: 1, editing: false},
@@ -15,13 +16,18 @@ const All_ARTICLES: Article[] = [
    providedIn: 'root'
 })
 export class ArticleService {
-   getAllArticles() {
-      return of(All_ARTICLES);
-   }
+  getAllArticles() {
+    return of(All_ARTICLES);
+  }
+
   getDynamicColumns1() {
     return ['id', 'title', 'category', 'writer', 'active', 'last_update', 'minutes'];
   }
-   getDisplayColumnNames1() {
-      return ['Id', 'Title', 'Category', 'Writer', 'Active', 'Last Update', 'Minutes'];
-   }
+
+  getDisplayColumnNames1() {
+    return ['Id', 'Title', 'Category', 'Writer', 'Active', 'Last Update', 'Minutes'];
+  }
+  getColumnValidations() {
+    return [{name: 'id', validator: {min: 1, max: 20} as NumberValidator}, {name: 'minutes', validator: {min: 1, max: 20} as NumberValidator}];
+  }
 }

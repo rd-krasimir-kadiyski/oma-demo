@@ -1,3 +1,6 @@
 .writer-column {
   width: 200px;
 }
+.error {
+  border-color: red;
+}

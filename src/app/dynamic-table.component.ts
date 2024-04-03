@@ -17,12 +17,16 @@ export class DynamicTableComponent implements AfterViewInit {
   @Input('dynamicColumns') dynamicColumns!: string[];
   @Input('displayColumnNames') displayColumnNames!: string[];
   @Input('dataToDisplay') dataToDisplay$!: Observable<any>;
+  @Input('columnValidations') columnValidations!: any[];
 
   dataSource = new MatTableDataSource();
   options = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
+  validationStatus: { [key: string]: boolean } = {};
+
   editRow(row: any) {
     row.editing = !row.editing;
   }
+
   addNewRecord() {
 
     let newRecord: Article = {
@@ -36,15 +40,25 @@ export class DynamicTableComponent implements AfterViewInit {
       editing: true
     };
 
-    // Add the new record to the beginning of the data source
     this.dataSource.data.unshift(newRecord);
     this.dataSource._updateChangeSubscription(); // Refresh the table
   }
-  validateMinutes(article: Article) {
-    if (article.minutes < 0) {
-      article.minutes = 0;
+
+  validateInput(colName: string, value: any){
+    let current = this.columnValidations.filter(e => e.name === colName);
+    if (current.length > 0) {
+      let currentValidation = current[0];
+      debugger;
+      if (currentValidation.validator) {
+        let numberValidator = currentValidation.validator;
+        if (value < numberValidator.min || value > numberValidator.max) {
+          return false;
+        }
+      }
     }
+    return true;
   }
+
   ngAfterViewInit() {
     this.dataToDisplay$.subscribe(data => {
       this.dataSource.data = data;
@@ -53,8 +67,17 @@ export class DynamicTableComponent implements AfterViewInit {
     });
   }
 
-  isTypeOf(value: any, type: string): boolean {
-    console.log(typeof value + ' ' + type);
-    return typeof value === type;
+  isTypeOf(value: any, type: string, instance?: string): boolean {
+    switch (instance) {
+      case 'date': {
+        return value instanceof Date;
+      }
+      case 'array': {
+        return Array.isArray(value);
+      }
+      default: {
+        return typeof value === type;
+      }
+    }
   }
 }

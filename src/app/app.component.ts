@@ -11,7 +11,8 @@ import { Article } from './article';
     <dynamic-table
      [dynamicColumns]="dynamicColumns1"
      [displayColumnNames]="displayColNames1"
-     [dataToDisplay]="articleData$">
+     [dataToDisplay]="articleData$"
+     [columnValidations]="columnValidations">
     </dynamic-table>
 
 
@@ -21,18 +22,16 @@ export class AppComponent implements OnInit {
   dynamicColumns1!: string[];
   displayColNames1!: string[];
 
-  dynamicColumns2!: string[];
-  displayColNames2!: string[];
-
   articleData$!: Observable<Article[]>;
+  columnValidations!: any[]
 
   constructor(private articleService: ArticleService) { }
 
   ngOnInit() {
      this.articleData$ = this.articleService.getAllArticles();
-
      this.dynamicColumns1 = this.articleService.getDynamicColumns1();
      this.displayColNames1 = this.articleService.getDisplayColumnNames1();
+     this.columnValidations = this.articleService.getColumnValidations();
 
   }
 }
